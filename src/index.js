@@ -58,7 +58,12 @@ io.on('connection', function(client) {
     newChannel.save(function(err, channel){
       //Send message to those connected in the room
       console.log('new channel created');
-      io.emit("channelCreated", channel.name, channel.description, channel.id);
+      const obj = {
+        name: channel.name,
+        description: channel.description,
+        id: channel.id
+      }
+      io.emit("channelCreated", obj);
     });
   });
 
