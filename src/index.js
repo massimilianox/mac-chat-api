@@ -87,19 +87,28 @@ io.on('connection', function(client) {
     console.log(messageBody);
 
     let newMessage = new Message({
-    messageBody: messageBody,
-    userId: userId,
-    channelId: channelId,
-    userName: userName,
-    userAvatar: userAvatar,
-    userAvatarColor: userAvatarColor
-  });
+      messageBody: messageBody,
+      userId: userId,
+      channelId: channelId,
+      userName: userName,
+      userAvatar: userAvatar,
+      userAvatarColor: userAvatarColor
+    });
     //Save it to database
     newMessage.save(function(err, msg){
       //Send message to those connected in the room
+      let message = {
+        messageBody: msg.messageBody,
+        userId: msg.userId,
+        channelId: msg.channelId,
+        userName: msg.userName,
+        userAvatar: msg.userAvatar,
+        userAvatarColor: msg.userAvatarColor,
+        id: msg._id,
+        timeStamp: msg.timeStamp
+      }
+      io.emit("messageCreated", message);
       console.log('new message sent');
-
-      io.emit("messageCreated",  msg.messageBody, msg.userId, msg.channelId, msg.userName, msg.userAvatar, msg.userAvatarColor, msg.id, msg.timeStamp);
     });
   });
 });
