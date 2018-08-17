@@ -5,7 +5,7 @@ import User from '../model/user';
 
 import { authenticate } from '../middleware/authMiddleware';
 
-export default({ config, db }) => {
+export default ({ config, db }) => {
   let api = Router();
 
   // '/v1/user/add' - Create
